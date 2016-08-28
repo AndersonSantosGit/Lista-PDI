@@ -18,14 +18,14 @@ filt = np.zeros((h, w))
 # wc = math.pi/4
 wc = 3*math.pi/8
 
-wcpixel = wc*(1/math.pi)*(np.floor(h/2))  # idealmente h = w
+wc_pixel = wc*(1/math.pi)*(np.floor(h/2))  # idealmente h = w
 
 n = 2
 
 for i in range(h):
     for j in range(w):
         dist = ((i-(np.floor(h/2)))**2 + (j-(np.floor(w/2)))**2)**.5  # distancia ao centro da imagem
-        filt[i, j] = 1-(1/(1+(dist/wcpixel)**(2*n)))  # Filtro Butterworth Passa-Alta
+        filt[i, j] = 1-(1/(1+(dist/wc_pixel)**(2*n)))  # Filtro Butterworth Passa-Alta
 
 result = np.multiply(fourier_shifted, filt)
 

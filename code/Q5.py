@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
@@ -17,7 +16,7 @@ dy, dx = np.gradient(np.double(gray))
 
 gx = np.power(dx, 2.0)
 gy = np.power(dy, 2.0)
-M = np.sqrt((gx + gy))  # Magnitude do gradiente
+m = np.sqrt((gx + gy))  # Magnitude do gradiente
 
 direcao = np.divide(1, np.tan(np.divide(gy, gx)))
 direcao = np.arctan(np.divide(gy, gx))
@@ -26,7 +25,7 @@ plt.imshow(gray, cmap='gray')
 plt.title('Original Image')
 plt.show()
 
-plt.imshow(M, cmap='gray')
+plt.imshow(m, cmap='gray')
 plt.title('Original Image')
 plt.show()
 

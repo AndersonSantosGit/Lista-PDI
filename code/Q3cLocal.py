@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import math
 import random
 
@@ -28,11 +27,11 @@ plt.show()
 '''
 w = 50
 # Iniciando os Limiares
-T = [[random.randint(0, 255) for x in range(int(im_local_r.shape[1]/w))] for x in range(int((im_local_r.shape[0]/w)))]
+t = [[random.randint(0, 255) for x in range(int(im_local_r.shape[1]/w))] for x in range(int((im_local_r.shape[0]/w)))]
 
 # parametro dt
 dt = 1
-T_new = np.array(T)+dt+1
+t_new = np.array(t)+dt+1
 # Define the window size
 windowsize_r = w
 windowsize_c = w
@@ -44,101 +43,101 @@ for r in range(0, im_local_r.shape[0]-windowsize_r, windowsize_r):  # linhas
         # plt.imshow(window, cmap = 'gray')
         # plt.show()
         # hist = np.histogram(window,bins=256)
-        while abs(T[i][j] - T_new[i, j]) >= dt:
-            T[i][j] = T_new[i, j]
-            res = window >= T[i][j]
+        while abs(t[i][j] - t_new[i, j]) >= dt:
+            t[i][j] = t_new[i, j]
+            res = window >= t[i][j]
             # plt.hist(window)
             # plt.show()
             # Calculo das intensidades medias
             if np.isnan(np.mean(window[res==False])):
-                m1 = 0 + 2
+                m_1 = 0 + 2
             else:
-                m1 = int(round(np.mean(window[res==False])))  # Media de 0's
+                m_1 = int(round(np.mean(window[res==False])))  # Media de 0's
             if np.isnan(np.mean(window[res])):
-                m2 = 0 + 2
+                m_2 = 0 + 2
             else:
-                m2 = int(round(np.mean(window[res])))  # Media de 0's
+                m_2 = int(round(np.mean(window[res])))  # Media de 0's
             # Calculo do novo limiar
-            T_new[i, j] = int(round(0.5 * (m1+m2)))
-        im_local_r[r:r+windowsize_r, c:c+windowsize_c] = im_local_r[r:r+windowsize_r, c:c+windowsize_c] >= T_new[i, j]
+            t_new[i, j] = int(round(0.5 * (m_1+m_2)))
+        im_local_r[r:r+windowsize_r, c:c+windowsize_c] = im_local_r[r:r+windowsize_r, c:c+windowsize_c] >= t_new[i, j]
         j = j+1
 
     # Ajustando na horizontal
     if np.mod(im_local_r.shape[1], w) != 0:
         # Redimensionando a janela
-        windowsize_r_AUX = w
-        windowsize_c_AUX = int(np.mod(im_local_r.shape[1], w))
+        windowsize_r_aux = w
+        windowsize_c_aux = int(np.mod(im_local_r.shape[1], w))
         # Obtendo a janela
-        window = im_local_r[r:r+windowsize_r_AUX, c:c+windowsize_c_AUX]
-        T_AUX = random.randint(0, 255)
-        T_new_AUX = T_AUX+dt+1
-        while abs(T_AUX - T_new_AUX) >= dt:
-            T_AUX = T_new_AUX
-            res = window >= T_AUX
+        window = im_local_r[r:r+windowsize_r_aux, c:c+windowsize_c_aux]
+        t_aux = random.randint(0, 255)
+        t_new_aux = t_aux+dt+1
+        while abs(t_aux - t_new_aux) >= dt:
+            t_aux = t_new_aux
+            res = window >= t_aux
             # Calculo das intensidades medias
             if np.isnan(np.mean(window[res==False])):
-                m1 = 0 + 2
+                m_1 = 0 + 2
             else:
-                m1 = int(round(np.mean(window[res==False])))  # Media de 0's
+                m_1 = int(round(np.mean(window[res==False])))  # Media de 0's
             if np.isnan(np.mean(window[res])):
-                m2 = 0 + 2
+                m_2 = 0 + 2
             else:
-                m2 = int(round(np.mean(window[res])))  # Media de 0's
+                m_2 = int(round(np.mean(window[res])))  # Media de 0's
             # Calculo do novo limiar
-            T_new_AUX = int(round(0.5 * (m1+m2)))
-        im_local_r[r:r+windowsize_r_AUX, c+windowsize_c:c+windowsize_c+windowsize_c_AUX] = im_local_r[r:r+windowsize_r_AUX, c+windowsize_c:c+windowsize_c+windowsize_c_AUX] >= T_new_AUX
+            t_new_aux = int(round(0.5 * (m_1+m_2)))
+        im_local_r[r:r+windowsize_r_aux, c+windowsize_c:c+windowsize_c+windowsize_c_aux] = im_local_r[r:r+windowsize_r_aux, c+windowsize_c:c+windowsize_c+windowsize_c_aux] >= t_new_aux
     i = i+1
 
 # Ajustando na Vertical
 if np.mod(im_local_r.shape[0], w) != 0:
     # Redimensionando a janela
-    windowsize_r_AUX = int(np.mod(im_local_r.shape[0], w))
-    windowsize_c_AUX = w
+    windowsize_r_aux = int(np.mod(im_local_r.shape[0], w))
+    windowsize_c_aux = w
     # Percorrendo a ultima linha da imagem
-    for c in range(0, im_local_r.shape[1] - windowsize_c_AUX, windowsize_c_AUX):  # Colunas
-        window = im_local_r[r+windowsize_r:r+windowsize_r_AUX, c:c+windowsize_c_AUX]
-        T_AUX = random.randint(0, 255)
-        T_new_AUX = T_AUX+dt+1
-        while abs(T_AUX - T_new_AUX) >= dt:
-            T_AUX = T_new_AUX
-            res = window >= T_AUX
+    for c in range(0, im_local_r.shape[1] - windowsize_c_aux, windowsize_c_aux):  # Colunas
+        window = im_local_r[r+windowsize_r:r+windowsize_r_aux, c:c+windowsize_c_aux]
+        t_aux = random.randint(0, 255)
+        t_new_aux = t_aux+dt+1
+        while abs(t_aux - t_new_aux) >= dt:
+            t_aux = t_new_aux
+            res = window >= t_aux
             # Calculo das intensidades medias
             if np.isnan(np.mean(window[res==False])):
-                m1 = 0 + 2
+                m_1 = 0 + 2
             else:
-                m1 = int(round(np.mean(window[res==False])))  # Media de 0's
+                m_1 = int(round(np.mean(window[res==False])))  # Media de 0's
             if np.isnan(np.mean(window[res])):
-                m2 = 0 + 2
+                m_2 = 0 + 2
             else:
-                m2 = int(round(np.mean(window[res])))  # Media de 0's
+                m_2 = int(round(np.mean(window[res])))  # Media de 0's
             # Calculo do novo limiar
-            T_new_AUX = int(round(0.5 * (m1+m2)))
-        im_local_r[r+windowsize_r:(r+windowsize_r+windowsize_r_AUX), c:c+windowsize_c] = im_local_r[r+windowsize_r:(r+windowsize_r+windowsize_r_AUX), c:c+windowsize_c] >= T_new_AUX
+            t_new_aux = int(round(0.5 * (m_1+m_2)))
+        im_local_r[r+windowsize_r:(r+windowsize_r+windowsize_r_aux), c:c+windowsize_c] = im_local_r[r+windowsize_r:(r+windowsize_r+windowsize_r_aux), c:c+windowsize_c] >= t_new_aux
 
 # Ajustando na horizontal - Ultimo frame :p
 if np.mod(im_local_r.shape[1], w) != 0:
     # Redimensionando a janela
-    windowsize_r_AUX = int(np.mod(im_local_r.shape[0], w))
-    windowsize_c_AUX = int(np.mod(im_local_r.shape[1], w))
+    windowsize_r_aux = int(np.mod(im_local_r.shape[0], w))
+    windowsize_c_aux = int(np.mod(im_local_r.shape[1], w))
     # Obtendo a janela
-    window = im_local_r[r+windowsize_r:r+windowsize_r_AUX, c+windowsize_c:c+windowsize_c_AUX]
-    T_AUX = random.randint(0, 255)
-    T_new_AUX = T_AUX+dt+1
-    while abs(T_AUX - T_new_AUX) >= dt:
-        T_AUX = T_new_AUX
-        res = window >= T_AUX
+    window = im_local_r[r+windowsize_r:r+windowsize_r_aux, c+windowsize_c:c+windowsize_c_aux]
+    t_aux = random.randint(0, 255)
+    t_new_aux = t_aux+dt+1
+    while abs(t_aux - t_new_aux) >= dt:
+        t_aux = t_new_aux
+        res = window >= t_aux
         # Calculo das intensidades medias
         if np.isnan(np.mean(window[res==False])):
-            m1 = 0 + 2
+            m_1 = 0 + 2
         else:
-            m1 = int(round(np.mean(window[res==False])))  # Media de 0's
+            m_1 = int(round(np.mean(window[res==False])))  # Media de 0's
         if np.isnan(np.mean(window[res])):
-            m2 = 0 + 2
+            m_2 = 0 + 2
         else:
-            m2 = int(round(np.mean(window[res])))  # Media de 0's
+            m_2 = int(round(np.mean(window[res])))  # Media de 0's
         # Calculo do novo limiar
-        T_new_AUX = int(round(0.5 * (m1+m2)))
-    im_local_r[r+windowsize_r:(r+windowsize_r+windowsize_r_AUX), c+windowsize_c:(c+windowsize_c+windowsize_c_AUX)] = im_local_r[r+windowsize_r:(r+windowsize_r+windowsize_r_AUX),c+windowsize_c:(c+windowsize_c+windowsize_c_AUX)]>=T_new_AUX
+        t_new_aux = int(round(0.5 * (m_1+m_2)))
+    im_local_r[r+windowsize_r:(r+windowsize_r+windowsize_r_aux), c+windowsize_c:(c+windowsize_c+windowsize_c_aux)] = im_local_r[r+windowsize_r:(r+windowsize_r+windowsize_r_aux),c+windowsize_c:(c+windowsize_c+windowsize_c_aux)]>=t_new_aux
 
 
 plt.imshow(im_local_r, cmap='gray')
