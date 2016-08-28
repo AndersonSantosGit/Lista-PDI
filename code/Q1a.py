@@ -21,9 +21,6 @@ wc = 3*math.pi/8
 
 wcpixel = wc*(1/math.pi)*(np.floor(h/2))  # idealmente h = w
 
-print filt.shape[0]
-print filt.shape[1]
-
 for i in range(h):
     for j in range(w):
         dist = ((i-(np.floor(h/2)))**2 + (j-(np.floor(w/2)))**2)**.5  # distancia do ponto a origem do filtro
