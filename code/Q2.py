@@ -15,14 +15,3 @@ cv2.imshow('teste1', gray)
 cv2.imshow('teste2', imgPot)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
-'''
-plt.subplot(131),plt.imshow(gray, cmap = 'gray')
-plt.title('Imagem orginal'), plt.xticks([]), plt.yticks([])
-
-plt.subplot(133),plt.imshow(imgPot, cmap = 'gray')
-plt.title('Transformacao de Potencia'), plt.xticks([]), plt.yticks([])
-
-plt.show()
-
-'''
