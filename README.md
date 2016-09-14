@@ -68,3 +68,5 @@ meu [relatório](https://drive.google.com/file/d/0B6eSKtKniGUGZmc2Z3ZyUVlKcVE/vi
 __Qualquer dúvida, questionamento ou correção será muito bem vindo!__
 Caso queira saber sobre outros projetos visite a
 [minha página](http://andersondss.github.io/).
+
+## Dependências
