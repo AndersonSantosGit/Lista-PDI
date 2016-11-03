@@ -74,3 +74,4 @@ Caso queira saber sobre outros projetos visite a
 - OpenCV
 - Scikit Image
 - Scikit Learn
+- Numpy
