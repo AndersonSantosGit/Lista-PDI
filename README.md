@@ -70,3 +70,7 @@ Caso queira saber sobre outros projetos visite a
 [minha página](http://andersondss.github.io/).
 
 ## Dependências
+
+- OpenCV
+- Scikit Image
+- Scikit Learn
